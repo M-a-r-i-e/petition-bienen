@@ -1,0 +1,29 @@
+
+
+<h1>THEMA</h1>
+
+
+<p>INHALT</p>
+
+
+<p>zustimmung?</p>
+
+<form id="signature-form" method="POST" action="sign-petition">
+
+    {{#if error}}
+    <div class="error">{{error}}</div>
+    {{/if}}
+
+    <label for="firstname">First name</label>
+    <input type="text" name="firstname" placeholder="your first name" value={{firstname}}>
+
+    <input type="text" name="lastname" placeholder="your last name" value={{lastname}}>
+
+   
+    <canvas id="signature-canvas" width=300 height=100></canvas>
+    <input type="hidden" id="signature-code" name="signatureCode">
+
+    <button type="submit"> sign petition</button>
+
+
+</form>
