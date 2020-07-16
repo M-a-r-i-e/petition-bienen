@@ -4,18 +4,21 @@
 const canvas = document.querySelector("#signature-canvas");
 const ctx = canvas.getContext("2d");
 
+
 let currentX = 0;
 let currentY = 0;
+var mouseDown = false;
 
 function drawTo(newX, newY){
-
+    if(mouseDown) {
     // draw from current to new
 
-    ctx.beginPath();
-    ctx.moveTo(currentX, currentY);
-    ctx.lineTo(newX,newY);
-    ctx.closePath();
-    ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(currentX, currentY);
+        ctx.lineTo(newX,newY);
+        ctx.closePath();
+        ctx.stroke();
+    }
 
     //upodate the current values
 
@@ -24,25 +27,31 @@ function drawTo(newX, newY){
 
 }
 
-$("#signature-canvas").on("mousedown", function() {    
-    console.log("maus auf canvas");
 
-    $("#signature-canvas").on('mousemove', e => {
 
-        const canvasPosition = $("#signature-canvas").position();
+$("#signature-canvas").on('mousemove', e => {
 
-        const newMouseX = e.clientX - canvasPosition.left; //
-        const newMouseY = e.clientY - canvasPosition.top + $(document).scrollTop();
+    const canvasPosition = $("#signature-canvas").position();
 
-        drawTo (newMouseX, newMouseY);
+    const newMouseX = e.clientX - canvasPosition.left; //
+    const newMouseY = e.clientY - canvasPosition.top + $(document).scrollTop();
 
-    });
-
+    drawTo (newMouseX, newMouseY);
 
 });
 
-$("#signature-canvas").on("mouseup", function() {
-    $("#signature-canvas").off("mousemove");
+
+
+
+$("#signature-canvas").on("mousedown", function() {    
+    mouseDown = true;
+});
+
+
+$(document).on("mouseup", function() {
+    mouseDown = false;
+    $("#signature-code").val(canvas.toDataURL());
+
 });
 
 
@@ -55,6 +64,5 @@ $("#signature-canvas").on("mouseup", function() {
 $("#signature-canvas").on("mouseleave", e => {
     console.log("copy code from canvas to hidden field");
 
-    $("#signature-code").val(canvas.toDataURL());
-
 });
+

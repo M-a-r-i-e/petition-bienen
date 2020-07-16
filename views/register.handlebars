@@ -1,0 +1,28 @@
+
+<h1>Register for the petition:</h1>
+
+<form method="POST" action="/register">
+
+    {{#if error}}
+        <div class="error">{{error}}</div>
+    {{/if}}
+
+
+    <label for="firstname">FIRSTNAME</label>
+    <input id="firstname" value="{{firstname}}" name="firstname" type="text" placeholder="YOUR FIRSTNAME">
+
+    <label for="lastname">LASTNAME</label>
+    <input id="lastname" value="{{firstname}}" name="lastname" type="text" placeholder="YOUR LASTNAME">
+
+    <label for="email">EMAIL</label>
+    <input id="email" value="{{email}}" name="email" type="email" placeholder="YOUR EMAIL">
+
+    <label for="password">PASSWORD</label>
+    <input id="password" value="{{password}}" name="password" type="password" placeholder="ENTER YOUR PASSWORD">
+
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    <button type="submit">REGISTER</button>
+
+
+</form>

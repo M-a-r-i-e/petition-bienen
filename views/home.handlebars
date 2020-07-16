@@ -1,12 +1,11 @@
 
 
-<h1>THEMA</h1>
 
-
-<p>INHALT</p>
-
-
-<p>zustimmung?</p>
+<div class=containerUeberschrift>
+<h1 class="ueberschrift">Be Cool.</h1>
+<p class="beschreibung">ggggggnjcodahcohüfoirajpvä jfoiehnfoiae aenjvfonvigr nmkaöenfopi arnfiurbvir ndjaenfunwp4u ncojdnnoenfo nfrong nornfo norwnoig nfoiwehnfoiwn4going nnnf fjirwg kgk klk</p>
+<p class="beschreibung">please sign our petition!</p>
+</div>
 
 <form id="signature-form" method="POST" action="sign-petition">
 
@@ -14,16 +13,20 @@
     <div class="error">{{error}}</div>
     {{/if}}
 
-    <label for="firstname">First name</label>
-    <input type="text" name="firstname" placeholder="your first name" value={{firstname}}>
-
-    <input type="text" name="lastname" placeholder="your last name" value={{lastname}}>
-
    
-    <canvas id="signature-canvas" width=300 height=100></canvas>
+    <label for="signature-canvas">SIGN HERE:</label>
+    <canvas id="signature-canvas" width=400 height=70></canvas>
     <input type="hidden" id="signature-code" name="signatureCode">
 
-    <button type="submit"> sign petition</button>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    <button type="submit"> SIGN PETITION</button>
 
 
 </form>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="/signature-browser-code.js" type="text/javascript"></script>
+
+

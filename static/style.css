@@ -1,19 +1,130 @@
 
+/* allgemein */
+html, body { margin: 0; }
 
-body{
+body {
 
-    background: blue;
-
+    /* background-image: url("Bienen1.png"); */
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center; 
+    flex-direction: column; 
+    font-family: Arial, Helvetica, sans-serif;  
 }
+
+
 
 footer {
 
+    height: 30px;
+    background: rgba(255, 213, 0);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    line-height: 30px;
+}
 
+/* startseite */
+
+.containerUeberschrift {
+
+    width: 400px;
+    align-items: center;
+    justify-content: center; 
+    flex-direction: column; 
+    text-align: center;
+
+}
+
+.ueberschrift {
+
+    font-size: 70px;
+    text-align: left;
+}
+
+.beschreibung {
+
+    text-align: left;
+    line-height: 1.5em;
+}
+
+#signature-form {
+
+    width: 400px;
+    height: 250px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    flex-direction: column;
+    
 }
 
 #signature-canvas {
 
-    background-color: rgb(235, 130, 183);
-    border: 2px solid green;
+    background-color: rgba(245, 244, 186, 0.6);
+    border: 1px solid rgba(209, 182, 26, 0.8);
+    border-radius: 5px;
+}
 
+
+button {
+
+    background: rgb(245, 213, 10);
+    border: solid 1px rgb(245, 213, 10);
+    width: 170px;
+    height: 50px;
+    border-radius: 5px;
+    margin: 20px;
+    font-size: large;
+    font-weight: bold;
+    
+}
+
+button:hover {
+
+    background: rgb(198, 133, 14);
+}
+
+/* dankeseite */
+
+.thanks {
+
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    flex-direction: column;
+
+}
+
+.canvas {
+
+    justify-content: center; 
+
+}
+
+.linksigners {
+
+    justify-content: center; 
+    margin: 20px;
+}
+
+/* unterschriftenseite */
+
+.signers {
+
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    flex-direction: column;
+
+}
+
+li {
+
+    list-style: none; 
 }

@@ -1,0 +1,24 @@
+
+
+<h1>Give us a few information:</h1>
+
+
+<form method="POST" action="/profile">
+
+    {{#if error}}
+        <div class="error">{{error}}</div>
+    {{/if}}
+
+    <input type="text" name="age" placeholder="AGE" value="{{age}}">
+
+    <input type="text" name="city" placeholder="CITY" value="{{city}}">
+
+    <input type="url" name="homepage" placeholder="HOMEPAGE" value="{{homepage}}">
+
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    <button type="submit">SAVE</button>
+
+
+
+</form>
