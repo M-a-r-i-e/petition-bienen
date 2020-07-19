@@ -1,0 +1,30 @@
+
+
+<h1>Edit your Profile</h1>
+
+{{#if error}}
+        <div class="error">{{error}}</div>
+{{/if}}
+
+
+<form action="/profile-edit" method="POST">
+
+<input name="firstname" id="firstname" type="text" placeholder="FIRSTNAME" value="{{firstname}}">
+
+<input id="lastname" name="lastname" type="text" placeholder="LASTNAME" value="{{lastname}}">
+
+<input id="email" name="email" type="text" placeholder="EMAIL" value="{{email}}">
+
+<input id="password" name="password" placeholder="PASSWORD" type="password">
+
+<input id="age" name="age" type="text" placeholder="AGE" value="{{age}}">
+
+<input id="city" name="city" type="text" placeholder="CITY" value="{{city}}">
+
+<input id="homepage" name="homepage" type="url" placeholder="HOMEPAGE" value="{{homepage}}">
+
+
+<input type="hidden" name="_csrf" value="{{csrfToken}}">
+<button type="submit">SAVE</button>
+
+</form>

@@ -8,3 +8,14 @@
 <a class="linksigners" href="/signers"> SEE ALL SIGNERS:</a>
 
 </div>
+
+
+<form action="/unsign-petition" method="POST">
+    not shure about your sign?
+    <button type="submit">UNSIGN</button>
+
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+</form>
+
+<p>WANT TO EDIT YOUR PROFILE?<a href="/profile-edit">KLICK HERE</a>.</p>

@@ -19,7 +19,7 @@ app.use(cookieSession({
 }));
 
 app.use(express.urlencoded({
-    extended: false
+    extended: false,
 }));
 
 app.use(csurf()); 
@@ -67,7 +67,11 @@ app.post("/register",(request, response) => {
 
 app.get("/login",(request, response) => {
 
-    response.render("login");
+    if(request.session.userID) {
+        response.redirect("/", 302);
+    } else {
+        response.render("login");
+    }
 
 });
 
@@ -133,13 +137,77 @@ app.post('/profile', (request, response) => {
 
 });
 
+app.get("/profile-edit", (request, response) => {
+
+    if(!request.session.userID) {
+        return response.redirect("/login", 302);
+    }
+
+    db.getAllUserInfo(request.session.userID)
+        .then(result => {
+            const userInfo = result.rows[0];
+            response.render("profile-edit", userInfo);
+        })
+        .catch((error) => {
+            console.log("error:", error);
+            response.status(500).send("something went wrong");
+        });
+        
+});
+
+app.post("/profile-edit", (request, response) => {
+
+    if(!request.session.userID) {
+        return response.redirect("/login", 302);
+    }
+
+    const { firstname, lastname, email, password, age, city, homepage } = request.body;
+    if(!firstname || !lastname || !email || !age) {
+        return response.render("profile-edit", {
+            error: "All fields musst be filled out",
+            firstname,
+            lastname,
+            email,
+            password,
+            age,
+            city,
+            homepage,
+
+        });
+    }
+
+    const userUpdatePromise = db.updateUser(request.session.userID, firstname, lastname, email);
+
+    let passwordUpdatePromise;
+    if(password) {
+        passwordUpdatePromise = hashing.generateHash(password).then(passwordHash => {
+            return db.updatePasswordHash(request.session.userID, passwordHash);
+        });
+    }
+
+    const upsertPromise = db.updateOrInsertUserProfile(request.session.userID, age, city, homepage);
+
+    Promise.all([userUpdatePromise, passwordUpdatePromise, upsertPromise]).then(data => {
+        response.redirect("/thank-you", 302);
+    });
+
+});
+
+
 //shows sing form
-app.get('/', function (request, response) {
+app.get("/", function (request, response) {
 
-    //if userID not in request.session
-    // -> redirect to /login
-    response.render("home");
+    if(!request.session.userID) {
+        return response.redirect("/login", 302);
+    }
 
+    db.getSignatureByUserID(request.session.userID).then((result) => {
+        if(result.rows.lenght > 0) {
+            response.redirect("/thank-you, 302");
+        } {
+            response.render("home");
+        }
+    });
 });
 
 
@@ -177,22 +245,41 @@ app.post('/sign-petition', function(request, response){
 });
 
 
+app.post("/unsign-petition", (request, response) => {
+
+    if(!request.session.userID) {
+        response.redirect("/login", 302);
+    } else {
+        db.deleteSignatureForUserId(request.session.userID).then(result => {
+            response.redirect("/", 302);
+        });
+    }
+
+});
+
 app.get("/thank-you", (request, response) => {
+    
+    const userID = request.session.userID;
+    // if(userID) {
+    db.getSignatureByUserID(userID)
+        .then((result) => {
+
+            const firstname = result.rows[0].firstname; // fehlermeldung für fehlende unterschrift - umleitung wenn = 0        
+            console.log("firstname", firstname);
+            const signatureCode = result.rows[0].signature_code;
+
+            response.render("thank-you", { signatureCode: signatureCode, firstname: firstname});    
+        })
+        .catch((error) => {
+            response.status(401);
+            console.log("error:", error);
+            response.send("sorry this session....");
+        });
 
     
-
-    const userID = request.session.userID;
-    db.getSignatureByUserID(userID).then(result => {
-
-        const firstname = result.rows[0].firstname;
-        const signatureCode = result.rows[0].signature_code;
-
-        response.render("thank-you", { signatureCode: signatureCode, firstname: firstname });
-    }).catch(error => {
-        response.status(401);
-        console.log("error:", error);
-    });
-
+    // } else {
+    //     response.redirect("login");
+    // }        
 });
 
 
