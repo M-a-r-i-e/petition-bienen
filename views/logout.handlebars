@@ -1,0 +1,13 @@
+
+
+<form id="logout" method="POST" action="logout">
+
+    {{#if error}}
+        <div class="error">{{error}}</div>
+    {{/if}}
+
+    <a href="/logout">LOGOUT</a>
+
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+</form>

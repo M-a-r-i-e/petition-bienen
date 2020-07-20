@@ -2,7 +2,7 @@
 
 const spicedPG = require("spiced-pg");
 
-const db = spicedPG("postgres:Marie1:@localhost:5432/petition");
+const db = spicedPG(process.env.DATABASE_URL || "postgres:Marie1:@localhost:5432/petition");
 
 
 // user id einfügen
@@ -52,9 +52,13 @@ exports.getSignatureByID = (signatureID) => {
 
 exports.getSignatureByUserID = (userID) => {
 
-    return db.query("SELECT * FROM signatures WHERE user_id = $1;", [userID]);   
-   
+    return db.query("SELECT * FROM signatures WHERE user_id = $1;", [userID]); 
+  
 };
+
+// exports.logout = (userID) => {
+    
+// };
 
 
 exports.getSigners = () => {

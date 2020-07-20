@@ -32,9 +32,11 @@ app.use(function(req, res, next) {
 
 app.get("/register",(request, response) => {
 
-    //if userID IS in request.session
-    // -> redirect to /thank-you
-    response.render("register");
+    if (request.session.userID) {
+        response.redirect("/", 302);
+    } else {
+        response.render("register");
+    }
 
 });
 
@@ -107,13 +109,36 @@ app.post("/login",(request, response) => {
 });
 
 
+app.get("/logout", (request, response) => {
+
+    // if(!request.session.userID) {
+    //     return response.redirect("/login", 302);
+    // } else {
+    //     response.render("logout");
+    // }
+
+});
+
+app.post("/logout", (request, response) => {
+
+    // const userID = request.session.userID;
+    // if(userID) {
+    //     userID == false;
+    //     response.redirect("login");
+    // }
+});
+
+
+
 app.get('/profile', (request, response) => {
     if(request.session.userID) {
         response.render("profile");
     } else {
         response.redirect("/login", 302);
     }
+
 });
+
 
 app.post('/profile', (request, response) => {
 
@@ -134,6 +159,7 @@ app.post('/profile', (request, response) => {
         response.status(500).send("Uups. something went wrong");
         console.log("error:", error);
     });
+
 
 });
 
@@ -208,6 +234,7 @@ app.get("/", function (request, response) {
             response.render("home");
         }
     });
+
 });
 
 
@@ -260,13 +287,17 @@ app.post("/unsign-petition", (request, response) => {
 app.get("/thank-you", (request, response) => {
     
     const userID = request.session.userID;
+    const firstname = request.session.firstname;
     // if(userID) {
     db.getSignatureByUserID(userID)
         .then((result) => {
-
-            const firstname = result.rows[0].firstname; // fehlermeldung für fehlende unterschrift - umleitung wenn = 0        
+            // const firstname = result.rows[0].firstname; // fehlermeldung für fehlende unterschrift - umleitung wenn = 0        
             console.log("firstname", firstname);
             const signatureCode = result.rows[0].signature_code;
+
+            // if (signatureCode == 0) {
+            //     response.redirect("/");
+            // } else {}
 
             response.render("thank-you", { signatureCode: signatureCode, firstname: firstname});    
         })
@@ -294,4 +325,4 @@ app.get ("/signers",(request, response) => {
 });
 
 
-app.listen(8080);
+app.listen(process.env.PORT || 8080);
