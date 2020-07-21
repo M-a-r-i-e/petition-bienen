@@ -15,16 +15,16 @@
 
 
 <form action="/unsign-petition" method="POST">
-    NOT SHURE ABOUT SIGNING THIS PETITION?
+    <p class="thankyou">NOT SHURE ABOUT SIGNING THIS PETITION?</p>
     <button type="submit">UNSIGN</button>
 
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
 </form>
 
-<p class="editprofile" >WANT TO EDIT YOUR PROFILE? <a href="/profile-edit"> KLICK HERE</a></p>
+<a class="editprofile" href="/profile-edit">EDIT YOUR PROFILE</a>
 
-<a class="linksigners" href="/signers"> SEE ALL SIGNERS:</a>
+<a class="linksigners" href="/signers"> SEE ALL SIGNERS</a>
 </div>
 
 </div>

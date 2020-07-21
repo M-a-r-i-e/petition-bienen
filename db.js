@@ -71,5 +71,5 @@ exports.getAllUserInfo = (userID) => {
 };
 
 exports.getUserName = (userID) => {
-    return db.query("SELECT firstname FROM users WHERE user_id = $1;", [userID]);
+    return db.query("SELECT firstname FROM users WHERE id = $1;", [userID]);
 };

@@ -36,21 +36,25 @@ app.use(function(req, res, next) {
 // });
 
 
-// function showUserName(request, response, next) {
+function showUserName(request, response, next) {
 
-//     if(request.session.userId) {
+    console.log("sessionUserID", request.session);
 
-//         db.getUserName(request.session.userId).then(result => {
-//             request.user = result.rows[0];
-//         });
+    if(request.session.userID) {       
+
+        db.getUserName(request.session.userID).then(result => {
+            request.user = result.rows[0];
+
+            next();
+        });
         
-//     } else {
+    } else {
 
-//         next();
-//     }
-// }
+        next();
+    }
+}
 
-// app.use(showUserName);
+app.use(showUserName);
 
 
 
@@ -299,25 +303,26 @@ app.post("/unsign-petition", (request, response) => {
 
 });
 
-app.get("/thank-you", (request, response) => {
+app.get("/thank-you", showUserName, (request, response) => {
     
     const userID = request.session.userID;
-    const firstname = request.session.firstname;
+    // const firstname = request.session.firstname;
 
     if(userID) {
 
         db.getSignatureByUserID(userID)
             .then((result) => {
 
-                console.log("firstname", firstname);
 
                 if (result.rows.length == 0) {
                     response.redirect("/");
 
                 } else {
 
+                    let {firstname} = request.user;
+
                     const signatureCode = result.rows[0].signature_code;
-                    response.render("thank-you", { signatureCode: signatureCode, firstname: firstname});  
+                    response.render("thank-you", {signatureCode: signatureCode, firstname: firstname});  
                     
                 }   
             })

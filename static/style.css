@@ -43,6 +43,8 @@ footer {
     bottom: 0;
     position: fixed;
     line-height: 30px;
+    padding-left: 10px;
+
 }
 
 /* #hamburger {
@@ -135,6 +137,7 @@ h2 {
     font-size: 40px;
     text-align: center;
     justify-content: center;
+
 }
 
 .beschreibung {
@@ -226,6 +229,12 @@ button:hover {
     flex-direction: column;
 }
 
+.thankyou {
+
+    margin-top: 20px;
+    margin-bottom: -10px;
+}
+
 .canvas {
 
     justify-content: center; 
@@ -238,6 +247,9 @@ button:hover {
     align-items: center;
     justify-content: center; 
     margin-bottom: 40px;
+    text-decoration: none;
+    color: rgba(255, 136, 0, 0.8);
+    font-weight: bold;
 
 }
 
@@ -246,7 +258,11 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-
+    text-decoration: none;
+    color: rgba(255, 136, 0, 0.8);
+    font-weight: bold;
+    line-height: 3em;
+    margin-top: 30px;
 }
 
 /* unterschriftenseite */
@@ -254,12 +270,13 @@ button:hover {
 .signers {
 
     justify-content: center; 
-    max-width: 80%;
+    max-width: 90%;
     text-align: center;
 }
 
 li {
     
+    max-width: 90%;
     text-align: center;
     justify-content: center;
     font-size: larger;
