@@ -1,11 +1,17 @@
 
+<div id="alles">
+
+{{>logoutBtn}}
+
+<div id="hintergrund">
+
 <div class="thanks">
 
-<h1> Thank you for signing our petition {{firstname}}! </h1>
+<h2> Thank you for signing our petition {{firstname}}! </h2>
 
 <img class="canvas" src="{{signatureCode}}" alt="unterschrift">
 
-</div>
+
 
 
 <form action="/unsign-petition" method="POST">
@@ -16,6 +22,10 @@
 
 </form>
 
-<p class="editprofile" ><a href="/profile-edit"> WANT TO EDIT YOUR PROFILE? </a></p>
+<p class="editprofile" >WANT TO EDIT YOUR PROFILE? <a href="/profile-edit"> KLICK HERE</a></p>
 
 <a class="linksigners" href="/signers"> SEE ALL SIGNERS:</a>
+</div>
+
+</div>
+</div>

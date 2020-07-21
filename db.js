@@ -56,11 +56,6 @@ exports.getSignatureByUserID = (userID) => {
   
 };
 
-// exports.logout = (userID) => {
-    
-// };
-
-
 exports.getSigners = () => {
     return db.query('SELECT firstname, lastname, age, city, homepage FROM signatures JOIN users ON signatures.user_id = users.id JOIN profiles ON users.id = profiles.user_id;');
 };
@@ -73,4 +68,8 @@ exports.saveProfile = (userID, age, city, homepage) => {
 
 exports.getAllUserInfo = (userID) => {
     return db.query("SELECT * FROM users LEFT JOIN profiles ON users.id = profiles.user_id WHERE users.id = $1;", [userID]);
+};
+
+exports.getUserName = (userID) => {
+    return db.query("SELECT firstname FROM users WHERE user_id = $1;", [userID]);
 };

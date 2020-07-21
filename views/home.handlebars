@@ -1,9 +1,14 @@
 
 
+<div id="alles">
 
-<div class=containerUeberschrift>
+{{>logoutBtn}}
+
+<div id="hintergrund">
+    
+<div class="containerUeberschrift">
 <h1 class="ueberschrift">Bee Cool.</h1>
-<p class="beschreibung">We would like to create a better environment for our bees. Bees and other insekts are very important for our ecosystem....</p>
+<p class="beschreibung">Protect the bees! By signing this petition you can contribute to the protection of our bees.</p>
 <h3 class="beschreibung">PLEASE SIGN OUR PETITION!</h3>
 </div>
 
@@ -15,7 +20,9 @@
 
    
     <label for="signature-canvas">SIGN HERE:</label>
-    {{!-- <img id="signature" src="/signature.png" width=400 height=70> --}}
+    {{!-- <div id="signatureWrapper" class="">
+    <img id="signature" src="/signature.png" width=400 height=70>
+    </div> --}}
     <canvas id="signature-canvas" width=400 height=70></canvas>
     <input type="hidden" id="signature-code" name="signatureCode">
 
@@ -28,6 +35,9 @@
 
 <a class="linksigners" href="/signers"> SEE ALL SIGNERS:</a>
 
+</div>
+
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 <script src="/signature-browser-code.js" type="text/javascript"></script>

@@ -29,6 +29,30 @@ app.use(function(req, res, next) {
     next();
 });
 
+// var signature = $("#signature");
+// var signatureWrapper = $("signatureWrapper");
+// signature.on("click", function() {
+//     signatureWrapper.classlist.add("off");
+// });
+
+
+// function showUserName(request, response, next) {
+
+//     if(request.session.userId) {
+
+//         db.getUserName(request.session.userId).then(result => {
+//             request.user = result.rows[0];
+//         });
+        
+//     } else {
+
+//         next();
+//     }
+// }
+
+// app.use(showUserName);
+
+
 
 app.get("/register",(request, response) => {
 
@@ -109,25 +133,15 @@ app.post("/login",(request, response) => {
 });
 
 
-app.get("/logout", (request, response) => {
-
-    // if(!request.session.userID) {
-    //     return response.redirect("/login", 302);
-    // } else {
-    //     response.render("logout");
-    // }
-
-});
-
 app.post("/logout", (request, response) => {
 
-    // const userID = request.session.userID;
-    // if(userID) {
-    //     userID == false;
-    //     response.redirect("login");
-    // }
+    if(request.session.userID) {
+        request.session.userID = null;
+        response.redirect("/login");
+    } else {
+        response.redirect("/signers");
+    }
 });
-
 
 
 app.get('/profile', (request, response) => {
@@ -228,8 +242,9 @@ app.get("/", function (request, response) {
     }
 
     db.getSignatureByUserID(request.session.userID).then((result) => {
+
         if(result.rows.lenght > 0) {
-            response.redirect("/thank-you, 302");
+            response.redirect("/thank-you", 302);
         } {
             response.render("home");
         }
@@ -288,29 +303,34 @@ app.get("/thank-you", (request, response) => {
     
     const userID = request.session.userID;
     const firstname = request.session.firstname;
-    // if(userID) {
-    db.getSignatureByUserID(userID)
-        .then((result) => {
-            // const firstname = result.rows[0].firstname; // fehlermeldung für fehlende unterschrift - umleitung wenn = 0        
-            console.log("firstname", firstname);
-            const signatureCode = result.rows[0].signature_code;
 
-            // if (signatureCode == 0) {
-            //     response.redirect("/");
-            // } else {}
+    if(userID) {
 
-            response.render("thank-you", { signatureCode: signatureCode, firstname: firstname});    
-        })
-        .catch((error) => {
-            response.status(401);
-            console.log("error:", error);
-            response.send("sorry this session....");
-        });
+        db.getSignatureByUserID(userID)
+            .then((result) => {
+
+                console.log("firstname", firstname);
+
+                if (result.rows.length == 0) {
+                    response.redirect("/");
+
+                } else {
+
+                    const signatureCode = result.rows[0].signature_code;
+                    response.render("thank-you", { signatureCode: signatureCode, firstname: firstname});  
+                    
+                }   
+            })
+            .catch((error) => {
+                response.status(401);
+                console.log("error:", error);
+                response.send("sorry this session does not work.");
+            });
 
     
-    // } else {
-    //     response.redirect("login");
-    // }        
+    } else {
+        response.redirect("login");
+    }        
 });
 
 
@@ -323,6 +343,5 @@ app.get ("/signers",(request, response) => {
             });
         });
 });
-
 
 app.listen(process.env.PORT || 8080);
